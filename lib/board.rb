@@ -34,7 +34,7 @@ class Board
   attr_writer :board
 
   def make_board(rows, columns)
-    Array.new(rows, Array.new(columns, 'O'))
+    Array.new(rows) { Array.new(columns, 'O') }
   end
 
   def win_vertical?(board, player)
