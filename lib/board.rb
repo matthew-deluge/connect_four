@@ -2,7 +2,7 @@
 # main board class, includes both move functionality and win/draw tests
 class Board
 
-  attr_reader :board
+  attr_accessor :board
 
   def initialize(rows = 6, columns = 7)
     @board = make_board(rows, columns)
@@ -31,10 +31,8 @@ class Board
 
   private
 
-  attr_writer :board
-
   def make_board(rows, columns)
-    Array.new(rows, Array.new(columns, 'O'))
+    Array.new(rows) { Array.new(columns, 'O') }
   end
 
   def win_vertical?(board, player)
@@ -99,7 +97,7 @@ class Board
   def l_diagnol_check(row, column, board, player)
     array = []
     streak = 0
-    until row == 5 || column == 0 
+    until row > 5 || column < 0 
       array.push(board[row][column])
       row += 1
       column -= 1

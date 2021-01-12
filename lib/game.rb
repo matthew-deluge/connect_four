@@ -3,14 +3,14 @@ require_relative './board'
 require_relative './display'
 # main game class
 
-class Game 
+class Game
 
   include Display
 
   attr_reader :board, :player_one, :player_two
 
-  PONE_CHARACTER = 'X'
-  PTWO_CHARACTER = 'Y'
+  PONE_CHARACTER = "⏺".red
+  PTWO_CHARACTER = "◍".blue
 
   def initialize()
     @board = Board.new()
@@ -19,6 +19,7 @@ class Game
   end
 
   def turn(player, board = @board)
+    puts "\e[H\e[2J"
     print_board(board.board)
     column = prompt_player(player)
     board.play_piece(column, player)
@@ -34,21 +35,24 @@ class Game
     input
   end
 
-  def game_over(player_one = @player_one, player_two = @player_two)
+  def game_over(player_one = @player_one, player_two = @player_two, board = @board)
+    puts "\e[H\e[2J"
+    print_board(board.board)
     if board.win?(player_one)
       puts "Congrats to #{player_one}, you are a champion!"
     elsif board.win?(player_two)
-      puts "Congrats to #{player_one}, you are a champion!"
+      puts "Congrats to #{player_two}, you are a champion!"
     elsif board.draw?(player_one, player_two)
       puts "It's a draw, try again nerds!"
     end
   end
 
   def play(board = @board, player_one = @player_one, player_two = @player_two)
-    print_board(@board.board)
     instructions
     until board.win?(player_one) || board.win?(player_two) || board.draw?(player_one, @player_two)
       turn(player_one)
+      break if board.win?(player_one) || board.win?(player_two) || board.draw?(player_one, @player_two)
+
       turn(player_two)
     end
     game_over

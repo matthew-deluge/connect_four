@@ -31,7 +31,7 @@ describe Board do
        end
     end
 
-    context 'when passed a right diagnol winning board' do
+    context 'when passed a left diagnol winning board' do
       subject(:win_board) { described_class.new() }
        it 'returns true' do
         diagnol_win = [['X','O','O','O','O','O','O'],
@@ -44,18 +44,31 @@ describe Board do
        end
     end
 
-    context 'when passed a left_diagnol winning board' do
+    context 'when passed a right diagnol winning board' do
       subject(:win_board) { described_class.new() }
        it 'returns true' do
-        diagnol_win = [['X','O','O','O','O','X','X'],
-                       ['O','O','O','O','X','X','O'],
-                       ['O','O','O','X','X','O','O'],
-                       ['X','O','X','X','O','O','O'],
-                       ['X','X','O','O','O','O','O'],
-                       ['X','O','O','O','O','O','O']]
+        diagnol_win = [['O','O','O','O','O','O','O'],
+                       ['O','O','O','O','O','O','O'],
+                       ['O','O','O','O','X','O','O'],
+                       ['O','O','O','X','O','O','O'],
+                       ['O','O','X','O','O','O','O'],
+                       ['O','X','O','O','O','O','O']]
         expect(win_board.win?('X', diagnol_win)).to be true
        end
     end
+
+    context 'when passed a three diagnol streak' do
+      subject(:win_board) { described_class.new() }
+       it 'returns false' do
+        diagnol_win = [['O','O','O','O','O','O','O'],
+                       ['O','O','O','O','O','O','O'],
+                       ['O','O','O','O','O','O','O'],
+                       ['O','O','X','X','O','O','O'],
+                       ['X','X','X','O','O','O','O'],
+                       ['X','O','O','O','O','O','O']]
+        expect(win_board.win?('X', diagnol_win)).to be false
+       end
+    end 
     
     context 'when passed a non-winning board' do
       subject(:no_win_board) { described_class.new() }
