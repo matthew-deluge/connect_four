@@ -1,0 +1,2 @@
+run = "ruby lib/game.rb"
+language = "ruby"
