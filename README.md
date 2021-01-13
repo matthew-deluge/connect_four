@@ -1,4 +1,4 @@
-# connect_four
+# Connect Four
 
 A command line version of the classic game Connect Four. 
 
